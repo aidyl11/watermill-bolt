@@ -1,7 +1,7 @@
 package boltwatermill
 
 import (
-	"fmt"
+	//	"fmt"
 
 	"testing"
 
@@ -28,7 +28,7 @@ func newPubSub(t *testing.T) (message.Publisher, message.Subscriber) {
 	closemu.RLock()
 	dbStormPub, dbStormSub := newstormPubSub(db, "file_test.db")
 	closemu.RUnlock()
-	publisher, err := NewPublisher(
+	publisher, _ /* ,err*/ := NewPublisher(
 		dbStormPub,
 		PublisherConfig{SchemaAdapter: BoltSchemaAdapter{db: dbStormPub}},
 		logger,
@@ -36,7 +36,7 @@ func newPubSub(t *testing.T) (message.Publisher, message.Subscriber) {
 
 	//require.NoError(t, err)
 
-	subscriber, err := NewSubscriber(dbStormSub, SubscriberConfig{SchemaAdapter: BoltSchemaAdapter{db: dbStormSub}}, logger)
+	subscriber, _ /*err */ := NewSubscriber(dbStormSub, SubscriberConfig{SchemaAdapter: BoltSchemaAdapter{db: dbStormSub}}, logger)
 	//*storm.DB does not implement message.Subscriber (missing Subscribe method)
 	//require.NoError(t, err)
 
